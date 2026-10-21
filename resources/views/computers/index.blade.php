@@ -4,7 +4,10 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1 class="mb-4">Lista de Equipos de Cómputo</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Lista de Equipos de Cómputo</h1>
+            <a href="{{ route('computers.create') }}" class="btn btn-success">Crear</a>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -24,6 +27,12 @@
                             <td>{{ $computer['brand'] }}</td>
                             <td>
                                 <a href="{{ route('computers.show', $computer['id']) }}" class="btn btn-info btn-sm">Ver más</a>
+                                <a href="{{ route('computers.edit', $computer['id']) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <form action="{{ route('computers.destroy', $computer['id']) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                     @empty

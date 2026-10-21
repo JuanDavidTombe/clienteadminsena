@@ -9,7 +9,10 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1 class="mb-4">Lista de Aprendices</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Lista de Aprendices</h1>
+            <a href="{{ route('apprentices.create') }}" class="btn btn-success">Crear</a>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -35,6 +38,12 @@
                             <td>{{ $apprentice['computer_id'] }} <span class="badge bg-light text-dark">{{ $computerNumbers[$apprentice['computer_id']] ?? '' }}</span></td>
                             <td>
                                 <a href="{{ route('apprentices.show', $apprentice['id']) }}" class="btn btn-info btn-sm">Ver más</a>
+                                <a href="{{ route('apprentices.edit', $apprentice['id']) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <form action="{{ route('apprentices.destroy', $apprentice['id']) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                     @empty

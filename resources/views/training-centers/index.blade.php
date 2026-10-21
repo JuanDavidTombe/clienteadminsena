@@ -4,7 +4,10 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1 class="mb-4">Lista de Centros de Formación</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Lista de Centros de Formación</h1>
+            <a href="{{ route('training-centers.create') }}" class="btn btn-success">Crear</a>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -21,9 +24,15 @@
                         <tr>
                             <td>{{ $trainingCenter['id'] }}</td>
                             <td>{{ $trainingCenter['name'] }}</td>
-                            <td>{{ $trainingCenter['location'] }}</td>
+                            <td>{{ $trainingCenter['location'] ?? '' }}</td>
                             <td>
                                 <a href="{{ route('training-centers.show', $trainingCenter['id']) }}" class="btn btn-info btn-sm">Ver más</a>
+                                <a href="{{ route('training-centers.edit', $trainingCenter['id']) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <form action="{{ route('training-centers.destroy', $trainingCenter['id']) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar?')">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                     @empty
