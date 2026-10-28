@@ -9,11 +9,16 @@
         <a href="{{ route('areas.index') }}" class="btn btn-secondary">Volver</a>
     </div>
 
-    <form action="{{ route('areas.store') }}" method="POST">
+    <form action="{{ route('areas.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Adjuntar Imagen (Cloudinary)</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            <div class="form-text">Formatos permitidos: JPG, PNG, WEBP, GIF.</div>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>

@@ -10,10 +10,11 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped align-middle">
                 <thead class="thead-dark">
                     <tr>
                         <th>id</th>
+                        <th>Imagen</th>
                         <th>name</th>
                         <th>Acciones</th>
                     </tr>
@@ -22,6 +23,15 @@
                     @forelse ($areas as $area)
                         <tr>
                             <td>{{ $area['id'] }}</td>
+                            <td>
+                                @if (!empty($area['image_url']))
+                                    <a href="{{ $area['image_url'] }}" target="_blank">
+                                        <img src="{{ $area['image_url'] }}" alt="Imagen de {{ $area['name'] }}" style="width: 70px; height: 70px; object-fit: cover;" class="img-thumbnail rounded">
+                                    </a>
+                                @else
+                                    <span class="badge bg-secondary">Sin imagen</span>
+                                @endif
+                            </td>
                             <td>{{ $area['name'] }}</td>
                             <td>
                                 <a href="{{ route('areas.show', $area['id']) }}" class="btn btn-info btn-sm">Ver más</a>
@@ -35,7 +45,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center">No hay registros.</td>
+                            <td colspan="4" class="text-center">No hay registros.</td>
                         </tr>
                     @endforelse
                 </tbody>

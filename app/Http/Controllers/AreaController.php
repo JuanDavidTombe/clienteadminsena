@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Services\CloudinaryService;
 
 class AreaController extends Controller
 {
@@ -40,7 +41,16 @@ class AreaController extends Controller
     {
         $url = env('URL_SERVER_API');
 
-        Http::post($url . '/areas', $request->all());
+        $data = $request->only(['name']);
+
+        if ($request->hasFile('image')) {
+            $uploadedUrl = CloudinaryService::upload($request->file('image'));
+            if ($uploadedUrl) {
+                $data['image_url'] = $uploadedUrl;
+            }
+        }
+
+        Http::post($url . '/areas', $data);
 
         return redirect()->route('areas.index');
     }
@@ -57,7 +67,16 @@ class AreaController extends Controller
     {
         $url = env('URL_SERVER_API');
 
-        Http::put($url . '/areas/' . $id, $request->all());
+        $data = $request->only(['name']);
+
+        if ($request->hasFile('image')) {
+            $uploadedUrl = CloudinaryService::upload($request->file('image'));
+            if ($uploadedUrl) {
+                $data['image_url'] = $uploadedUrl;
+            }
+        }
+
+        Http::put($url . '/areas/' . $id, $data);
 
         return redirect()->route('areas.index');
     }
